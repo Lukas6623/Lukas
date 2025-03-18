@@ -109,9 +109,10 @@ async def user_bot():
         API_ID = config["api_id"]
         API_HASH = config["api_hash"]
     else:
-        print(LANG["enter_api_id"])
+        # Заменяем вывод на английский
+        print("Please enter your API ID:")
         API_ID = input()
-        print(LANG["enter_api_hash"])
+        print("Please enter your API Hash:")
         API_HASH = input()
         
         # Сохраняем введенные данные для последующего использования
@@ -142,6 +143,11 @@ async def user_bot():
     
     # Ждем, пока не будет получено новое сообщение
     await asyncio.Event().wait()
+
+# Запуск юзер-бота
+if __name__ == "__main__":
+    asyncio.run(user_bot())
+
 
 # Запуск юзер-бота
 if __name__ == "__main__":
