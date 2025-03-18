@@ -1,0 +1,26 @@
+LANG = {
+    "loading_modules": "🔄 Loading modules...",
+    "module_loaded": "✅ Module {name} successfully loaded!",
+    "module_error": "❌ Error loading module {name}: {error}",
+    "missing_register": "⚠️ The module {name} is missing the 'register_module' function.",
+    "userbot_started": "🚀 User-bot successfully started!",
+    "choose_language": "🌍 *Choose a language:*",
+    "language_changed": "✅ Language changed to English 🇬🇧. Type .restart to restart the bot.",
+    "language_changed_terminal": "✅ Language changed to English 🇬🇧. Type .restart to restart the bot.",
+    "restart_message": "🔄 Restarting the bot...",
+    "restart_completed": "✅ Bot restarted!",
+    "restart_message_terminal": "🔄 Restarting the bot in terminal...",
+    
+    # Buttons
+    "settings": "Settings ⚙️",
+    "choose_language_message": "Choose language:",
+    "all_modules": "All modules 📦",
+    "delete_module": "Delete module 🗑️",
+    "load_module": "Load module ⬆️",
+    "language_changed": "✅ Language changed to English 🇬🇧. Type .restart to restart the bot.",
+    "russian": "Русский 🇷🇺",
+    "ukrainian": "Українська 🇺🇦",
+    "english": "English 🇬🇧",
+    "all_modules_list": "All modules:",
+    "settings_message": "⚙️ Settings:",
+}
