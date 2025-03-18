@@ -59,6 +59,19 @@ def save_config(api_id, api_hash):
     with open(CONFIG_FILE, "w", encoding="utf-8") as file:
         json.dump(config, file)
 
+def save_token(token):
+    """ Сохраняет токен в конфигурации """
+    config = load_config()
+    if not config:
+        config = {}
+
+    # Добавляем токен в конфигурацию
+    config["token"] = token
+
+    # Сохраняем обновленную конфигурацию
+    with open(CONFIG_FILE, "w", encoding="utf-8") as file:
+        json.dump(config, file, ensure_ascii=False, indent=4)
+
 # Загружаем язык
 LANG = load_language()
 
@@ -138,16 +151,22 @@ async def user_bot():
         await asyncio.sleep(2)  # Даем время на перезапуск
         await message.edit(LANG["restart_completed"])
 
+    # Добавляем обработчик для команды /sp (токен)
+    @userbot.on(events.NewMessage(pattern=r"/sp (.*)"))
+    async def set_token(event):
+        token = event.pattern.match.group(1)  # Извлекаем токен из сообщения
+
+        # Сохраняем токен в конфигурацию
+        save_token(token)
+
+        # Отправляем сообщение об успешном сохранении
+        await event.reply(LANG["token_saved"].format(token=token))
+
     # Запуск второго бота (bot.py)
     subprocess.Popen([sys.executable, 'bot.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     # Ждем, пока не будет получено новое сообщение
     await asyncio.Event().wait()
-
-# Запуск юзер-бота
-if __name__ == "__main__":
-    asyncio.run(user_bot())
-
 
 # Запуск юзер-бота
 if __name__ == "__main__":
