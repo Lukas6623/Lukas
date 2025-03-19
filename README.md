@@ -1,4 +1,4 @@
-<b>Warning: </b>You must not use this bot for malicious purposes. This user bot is not a virus, but it can be used for malicious activities. You are responsible for all activities and your account may be blocked.
+<b>Warning: </b>You must not use this bot for malicious purposes. This user bot is not a virus, but it can be used for malicious activities. You are responsible for all actions, for violations of Telegram rules your account may be blocked.
 
 <hr>
 
