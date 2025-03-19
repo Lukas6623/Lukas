@@ -1,5 +1,6 @@
 import json
 import os
+import asyncio
 from telethon import TelegramClient, events
 from telethon.tl.custom import Button
 
@@ -7,11 +8,14 @@ from telethon.tl.custom import Button
 CONFIG_FILE = "config.json"
 LANG_FILE = "modules/language.txt"
 LANG_DIR = "languages"  # Директория с языковыми файлами
+MODULES_DIR = "modules"  # Директория с модулями
 
 # Функция загрузки конфигурации
 def load_config():
-    with open(CONFIG_FILE, "r", encoding="utf-8") as file:
-        return json.load(file)
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r", encoding="utf-8") as file:
+            return json.load(file)
+    return {}
 
 # Функция сохранения языка в файл
 def save_language(lang_code):
@@ -36,88 +40,94 @@ def load_translations(lang_code):
         return lang_module.get("LANG", {})
     return {}
 
-# Загружаем конфигурацию
-config = load_config()
-API_ID = config["api_id"]
-API_HASH = config["api_hash"]
-API_TOKEN = config["token"]
+# Функция для получения списка всех доступных модулей
+def get_modules():
+    modules = []
+    for filename in os.listdir(MODULES_DIR):
+        if filename.endswith(".py") and filename != "__init__.py":
+            modules.append(filename[:-3])  # Убираем расширение .py
+    return modules
 
-# Создаем клиента бота
-bot = TelegramClient('bot', api_id=API_ID, api_hash=API_HASH).start(bot_token=API_TOKEN)
+async def main():
+    # Загружаем конфигурацию
+    config = load_config()
 
-# Обработчик команды /start
-@bot.on(events.NewMessage(pattern='/start'))
-async def start(event):
-    # Загружаем текущий язык
-    current_lang = load_language()
-    translations = load_translations(current_lang)
+    # Проверяем наличие api_id, api_hash и токена
+    API_ID = config.get("api_id")
+    API_HASH = config.get("api_hash")
+    API_TOKEN = config.get("token")
 
-    # Кнопки для выбора языка и настроек
-    buttons = [
-        [Button.inline(translations.get("settings", "Настройки ⚙️"), b'settings')],
-        [Button.inline(translations.get("choose_language", "Выбрать язык 🌍"), b'choose_language')],
-    ]
-    
-    # Отправляем сообщение с кнопками
-    await event.reply(translations.get("choose_language_message", "🌍 Choose a language:"), buttons=buttons)
+    if not API_ID or not API_HASH or not API_TOKEN:
+        print("❌ Ошибка: отсутствуют api_id, api_hash или token в config.json")
+        return
 
-# Обработчик нажатия на кнопки
-@bot.on(events.CallbackQuery)
-async def callback(event):
-    lang_code = event.data.decode()  # Получаем код языка
+    # Создаем клиента бота
+    bot = TelegramClient('bot', api_id=API_ID, api_hash=API_HASH)
+    await bot.start(bot_token=API_TOKEN)  # Await the start to ensure proper initialization
 
-    # Если нажата кнопка "Настройки"
-    if lang_code == "settings":
-        # Загружаем текущий язык
+    # Обработчик команды /start
+    @bot.on(events.NewMessage(pattern='/start'))
+    async def start(event):
         current_lang = load_language()
         translations = load_translations(current_lang)
 
-        # Кнопки для настройки модулей
-        settings_buttons = [
-            [Button.inline(translations.get("all_modules", "Все модули 📦"), b'all_modules')],
-            [Button.inline(translations.get("delete_module", "Удалить модуль 🗑️"), b'delete_module')],
-            [Button.inline(translations.get("load_module", "Загрузить модуль ⬆️"), b'load_module')],
+        buttons = [
+            [Button.inline(translations.get("settings", "Настройки ⚙️"), b'settings')],
+            [Button.inline(translations.get("choose_language", "Выбрать язык 🌍"), b'choose_language')],
         ]
-
-        # Отправляем сообщение с настройками
-        await event.edit(translations.get("settings_message", "⚙️ Настройки:"), buttons=settings_buttons)
-        return
-
-    # Если нажата кнопка "Выбрать язык"
-    if lang_code == "choose_language":
-        # Загружаем текущий язык
-        current_lang = load_language()
-        translations = load_translations(current_lang)
-
-        # Кнопки для выбора языка
-        language_buttons = [
-            [Button.inline(translations.get("russian", "Русский 🇷🇺"), b'ru')],
-            [Button.inline(translations.get("ukrainian", "Українська 🇺🇦"), b'ua')],
-            [Button.inline(translations.get("english", "English 🇬🇧"), b'en')],
-        ]
-
-        # Отправляем сообщение с кнопками для выбора языка
-        await event.edit(translations.get("choose_language_message", "Please choose a language:"), buttons=language_buttons)
-        return
-
-    # Если нажата кнопка выбора языка
-    save_language(lang_code)  # Сохраняем язык в файл
-    
-    # Загружаем перевод для нового языка
-    translations = load_translations(lang_code)
-    
-    # Отправляем сообщение с переводом
-    await event.edit(translations.get("language_changed", "✅ Language changed!"))
-
-    # Если нажата кнопка "Все модули"
-    if lang_code == "all_modules":
-        # Логика для вывода всех модулей с их расширением .py
-        modules = [f for f in os.listdir('modules') if f.endswith('.py') and f not in ['__init__.py', 'bot.py']]
         
-        # Создаем кнопки с именами файлов без расширения .py
-        buttons = [[Button.inline(module.replace('.py', ''), module.encode())] for module in modules]
-        await event.edit(translations.get('all_modules_list', 'Все модули:') + "\n", buttons=buttons)
+        await event.reply(translations.get("choose_language_message", "🌍 Choose a language:"), buttons=buttons)
 
-# Запускаем бота
-print("Бот запущен")
-bot.run_until_disconnected()
+    # Обработчик кнопок
+    @bot.on(events.CallbackQuery)
+    async def callback(event):
+        lang_code = event.data.decode()
+
+        if lang_code == "settings":
+            current_lang = load_language()
+            translations = load_translations(current_lang)
+
+            settings_buttons = [
+                [Button.inline(translations.get("all_modules", "Все модули 📦"), b'all_modules')],
+                [Button.inline(translations.get("delete_module", "Удалить модуль 🗑️"), b'delete_module')],
+                [Button.inline(translations.get("load_module", "Загрузить модуль ⬆️"), b'load_module')],
+            ]
+
+            await event.edit(translations.get("settings_message", "⚙️ Настройки:"), buttons=settings_buttons)
+            return
+
+        if lang_code == "choose_language":
+            current_lang = load_language()
+            translations = load_translations(current_lang)
+
+            language_buttons = [
+                [Button.inline(translations.get("russian", "Русский 🇷🇺"), b'ru')],
+                [Button.inline(translations.get("ukrainian", "Українська 🇺🇦"), b'ua')],
+                [Button.inline(translations.get("english", "English 🇬🇧"), b'en')],
+            ]
+
+            await event.edit(translations.get("choose_language_message", "Please choose a language:"), buttons=language_buttons)
+            return
+
+        if lang_code == "all_modules":
+            # Получаем список всех доступных модулей
+            modules = get_modules()
+            current_lang = load_language()
+            translations = load_translations(current_lang)
+
+            # Создаем кнопки для каждого модуля
+            module_buttons = [[Button.inline(module, module.encode())] for module in modules]
+            await event.edit(translations.get("all_modules_message", "📦 Все доступные модули:"), buttons=module_buttons)
+            return
+
+        save_language(lang_code)
+        translations = load_translations(lang_code)
+        
+        await event.edit(translations.get("language_changed", "✅ Language changed!"))
+
+    print("✅ Бот запущен!")
+    await bot.run_until_disconnected()  # Ensure the bot keeps running
+
+# Запуск основного цикла
+if __name__ == "__main__":
+    asyncio.run(main()) 

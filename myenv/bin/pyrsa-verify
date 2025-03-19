@@ -1,4 +1,4 @@
-#!/home/andrey/Lukas/Lukas/myenv/bin/python
+#!/home/andrey/Lukas/myenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
