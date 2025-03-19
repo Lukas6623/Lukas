@@ -9,6 +9,7 @@ CONFIG_FILE = "config.json"
 LANG_FILE = "modules/language.txt"
 LANG_DIR = "languages"  # Директория с языковыми файлами
 MODULES_DIR = "modules"  # Директория с модулями
+OWNER_JSON_FILE = "owner.json"  # Файл с запрещенными модулями
 
 # Функция загрузки конфигурации
 def load_config():
@@ -47,6 +48,25 @@ def get_modules():
         if filename.endswith(".py") and filename != "__init__.py":
             modules.append(filename[:-3])  # Убираем расширение .py
     return modules
+
+# Функция загрузки запрещенных модулей из файла
+def load_forbidden_modules():
+    if os.path.exists(OWNER_JSON_FILE):
+        with open(OWNER_JSON_FILE, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            return data.get("forbidden_modules", [])
+    return []
+
+# Функция для проверки, можно ли удалить модуль
+def can_delete_module(module_name):
+    # Проверяем наличие модуля в файле owner.json
+    if os.path.exists(OWNER_JSON_FILE):
+        with open(OWNER_JSON_FILE, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            forbidden_modules = data.get("forbidden_modules", [])
+            if module_name in forbidden_modules:
+                return False  # Модуль нельзя удалить
+    return True  # Модуль можно удалить
 
 async def main():
     # Загружаем конфигурацию
@@ -117,7 +137,52 @@ async def main():
 
             # Создаем кнопки для каждого модуля
             module_buttons = [[Button.inline(module, module.encode())] for module in modules]
-            await event.edit(translations.get("all_modules_message", "📦 Все доступные модули:"), buttons=module_buttons)
+            await event.edit(translations.get("all_modules_message", "📦 Все доступные модули: Будьте внимательны если вы удалите модуль который не устанавливали функции юзер бота могут не работать."), buttons=module_buttons)
+            return
+
+        if lang_code == "delete_module":
+            # Получаем список всех доступных модулей
+            modules = get_modules()
+
+            # Загружаем список запрещенных модулей
+            forbidden_modules = load_forbidden_modules()
+
+            # Исключаем запрещенные модули из списка
+            modules_to_display = [module for module in modules if module not in forbidden_modules]
+
+            current_lang = load_language()
+            translations = load_translations(current_lang)
+
+            if not modules_to_display:
+                # Если нет доступных модулей для удаления
+                await event.edit(translations.get("no_modules_to_delete", "❌ Нет доступных модулей для удаления."), buttons=[])
+            else:
+                # Создаем кнопки для каждого модуля, который можно удалить
+                module_buttons = [[Button.inline(module, module.encode())] for module in modules_to_display]
+                await event.edit(translations.get("select_module_to_delete", "Выберите модуль для удаления: Будьте внимательны если вы удалите модуль который не устанавливали функции юзер бота могут не работать."), buttons=module_buttons)
+            return
+
+        # Если выбрали модуль для удаления
+        if lang_code in get_modules():
+            module_name = lang_code.strip()  # Получаем название модуля
+
+            # Проверяем, можно ли удалить модуль
+            if can_delete_module(module_name):
+                # Логика удаления модуля
+                try:
+                    os.remove(os.path.join(MODULES_DIR, f"{module_name}.py"))
+                    current_lang = load_language()
+                    translations = load_translations(current_lang)
+                    await event.edit(translations.get("module_deleted", f"✅ Модуль {module_name} удален!"))
+                except FileNotFoundError:
+                    current_lang = load_language()
+                    translations = load_translations(current_lang)
+                    await event.edit(translations.get("module_not_found", f"❌ Модуль {module_name} не найден на сервере."))
+            else:
+                current_lang = load_language()
+                translations = load_translations(current_lang)
+                await event.edit(translations.get("module_cannot_delete", f"❌ Модуль {module_name} не может быть удален, так как он запрещен для удаления."))
+
             return
 
         save_language(lang_code)
@@ -130,4 +195,4 @@ async def main():
 
 # Запуск основного цикла
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    asyncio.run(main())
