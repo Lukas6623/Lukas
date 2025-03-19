@@ -42,14 +42,14 @@ def load_config():
             return json.load(file)
     return None
 
-def save_config(api_id, api_hash, token=None):
+def save_config(api_id, api_hash, user_id, token=None):
     """ Сохраняет конфигурацию в файл. """
-    config = {"api_id": api_id, "api_hash": api_hash}
+    config = {"api_id": api_id, "api_hash": api_hash, "user_id": user_id}
     if token:
         config["token"] = token  # Добавляем токен, если передан
     
     with open(CONFIG_FILE, "w", encoding="utf-8") as file:
-        json.dump(config, file)
+        json.dump(config, file, indent=4)
 
 # Загружаем язык
 LANG = load_language()
@@ -89,16 +89,19 @@ async def user_bot():
         TOKEN = config.get("token")  # Чтение токена из конфигурации, если он есть
     else:
         print("Please enter your bot token:")
-        TOKEN = input()  # Запрашиваем токен у пользователя
+        TOKEN = input()
         print("Please enter your API ID:")
         API_ID = input()
         print("Please enter your API Hash:")
         API_HASH = input()
-        save_config(API_ID, API_HASH, TOKEN)  # Сохраняем токен, API_ID и API_HASH в конфиг
     
     userbot = TelegramClient("userbot", API_ID, API_HASH)
     await userbot.start()
-
+    
+    user = await userbot.get_me()
+    USER_ID = user.id  # Получаем user_id
+    save_config(API_ID, API_HASH, USER_ID, TOKEN)  # Сохраняем user_id в конфиг
+    
     modules_info = await load_modules(userbot)
 
     @userbot.on(events.NewMessage(pattern=r"\.restart"))
