@@ -1,3 +1,0 @@
-{
-    "forbidden_modules": ["user_info.py", "help", "Ping", "translate"]
-}

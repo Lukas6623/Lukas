@@ -1,0 +1,193 @@
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    mute_time TIMESTAMP,
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    # Функция для создания базы данных, если она не существует
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    mute_time TIMESTAMP,
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    # Функция для создания базы данных, если она не существует
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 61, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id, userbot):
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 61, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id, userbot):
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 61, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id, userbot):
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 61, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id, userbot):
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 61, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id, userbot):
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 58, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 49, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 58, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 49, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 58, in mute_user
+  File "/home/andrey/Lukas/modules/administartion.py", line 49, in is_admin
+    await event.reply(f"❌ Ошибка: {e}")
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on unmute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 46, in unmute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on mute_user
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/administartion.py", line 19, in mute_user
+    if not await is_admin(event.chat_id, event.sender_id):
+  File "/home/andrey/Lukas/modules/administartion.py", line 10, in is_admin
+    participant = await userbot.get_participant(chat, user)
+AttributeError: 'TelegramClient' object has no attribute 'get_participant'
+ERROR:telethon.client.updates:Unhandled exception on save_file
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/lm.py", line 34, in save_file
+    await event.reply(LANG["reply_to_python_file"])
+KeyError: 'reply_to_python_file'
+ERROR:telethon.client.updates:Unhandled exception on save_file
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/lm.py", line 41, in save_file
+    await event.reply(LANG["not_python_file"])
+KeyError: 'not_python_file'
+ERROR:asyncio:unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-1' coro=<user_bot() done, defined at /home/andrey/Lukas/main.py:95> exception=OperationalError('attempt to write a readonly database')>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1871, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/usr/lib/python3.10/selectors.py", line 469, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 36, in _run_until_disconnected
+    result = await self.disconnected
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/main.py", line 156, in user_bot
+    await userbot.run_until_disconnected()
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 43, in _run_until_disconnected
+    await self.disconnect()
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/telegrambaseclient.py", line 737, in _disconnect_coro
+    self._save_states_and_entities()
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/telegrambaseclient.py", line 694, in _save_states_and_entities
+    self.session.process_entities(types.contacts.ResolvedPeer(None, [e._as_input_peer() for e in entities], []))
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/sessions/sqlite.py", line 301, in process_entities
+    c.executemany(
+sqlite3.OperationalError: attempt to write a readonly database

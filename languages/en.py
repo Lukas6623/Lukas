@@ -38,4 +38,6 @@ LANG = {
     "module_deleted": "✅ Module {0} deleted!",
     "module_not_found": "❌ Module {0} not found on the server.",
     "module_cannot_delete": "❌ Module {0} cannot be deleted because it is prohibited from deletion.",
+    'greeting': 'Hello!',
+    'choose_action': 'Choose an action:',
 }

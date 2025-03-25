@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бот Конфигурация</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { margin-bottom: 20px; }
+        label, input { display: block; margin-top: 10px; }
+        button { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Настройки бота</h1>
+    <form id="config-form" method="post">
+        <label for="api_id">API ID:</label>
+        <input type="text" name="api_id" id="api_id" required value="{{ config.api_id if config.api_id else '' }}">
+        
+        <label for="api_hash">API Hash:</label>
+        <input type="text" name="api_hash" id="api_hash" required value="{{ config.api_hash if config.api_hash else '' }}">
+        
+        <label for="token">Токен бота:</label>
+        <input type="text" name="token" id="token" required value="{{ config.token if config.token else '' }}">
+        
+        <button type="submit">Сохранить</button>
+    </form>
+    
+    <button id="start-bot">Запустить бота</button>
+    
+    <script>
+        document.getElementById('config-form').onsubmit = async function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch('/', { method: 'POST', body: formData });
+            let result = await response.json();
+            alert(result.message);
+        };
+
+        document.getElementById('start-bot').onclick = async function() {
+            let response = await fetch('/start-bot', { method: 'POST' });
+            let result = await response.json();
+            alert(result.message || result.error);
+        };
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import time
 import os
+import json
 from telethon import events
 
 # Путь к файлу с языком
@@ -30,25 +31,38 @@ def load_language():
     # Возвращаем переводы для выбранного языка, если язык не найден, используем английский
     return LANGUAGES.get(lang_code, LANGUAGES["en"])
 
+# Функция для загрузки конфигурации из файла config.json
+def load_config():
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config.json'), 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+# Загружаем настройки из файла config.json
+config = load_config()
+AUTHORIZED_USER_ID = config.get('user_id')
+
 # Команды модуля
 COMMANDS = [".ping"]
 
 # Функция для регистрации модуля
 async def register_module(client):
-    # Загружаем текущий язык
-    lang = load_language()
-
     @client.on(events.NewMessage(pattern=r"\.ping"))
     async def ping(event):
         """Команда .ping для проверки времени отклика"""
-        start_time = time.time()  # Записываем время начала
-        # Отправляем сообщение, чтобы получить пинг
-        message = await event.reply("Pinging...")
         
+        # Проверка, что запрос пришел от авторизованного пользователя
+        if event.sender_id != AUTHORIZED_USER_ID:
+            return  # Если запрос не от авторизованного пользователя, ничего не показываем
+
+        # Загружаем текущий язык при каждом вызове команды
+        lang = load_language()
+
+        start_time = time.time()  # Записываем время начала
+        # Отправляем первое сообщение с текстом "Pinging..."
+        message = await event.reply("Pinging...")  # Отправляем сообщение
+
         end_time = time.time()  # Записываем время окончания
         # Вычисляем время отклика
         ping_time = (end_time - start_time) * 1000  # Время в миллисекундах
         
         # Обновляем сообщение с результатом, вместо отправки нового
-        await message.edit(lang["ping_message"].format(ping_time=ping_time))
-
+        await message.edit(lang["ping_message"].format(ping_time=ping_time))  # Редактируем существующее сообщение
