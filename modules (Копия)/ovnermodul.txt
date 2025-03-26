@@ -1,0 +1,8 @@
+{
+    "forbidden_modules": [
+        "help",
+        "Ping",
+        "translate",
+        "user_info"
+    ]
+}

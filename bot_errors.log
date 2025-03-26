@@ -191,3 +191,34 @@ Traceback (most recent call last):
   File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/sessions/sqlite.py", line 301, in process_entities
     c.executemany(
 sqlite3.OperationalError: attempt to write a readonly database
+ERROR:telethon.network.mtprotosender:Automatic reconnection failed 5 time(s)
+ERROR:asyncio:Future exception was never retrieved
+future: <Future finished exception=ConnectionError('Connection to Telegram failed 5 time(s)')>
+ConnectionError: Connection to Telegram failed 5 time(s)
+ERROR:telethon.client.updates:Unhandled exception on ping
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 55, in ping
+    lang = load_language()
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 21, in load_language
+    if os.path.exists(LANG_FILE):
+NameError: name 'LANG_FILE' is not defined
+ERROR:telethon.client.updates:Unhandled exception on ping
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 55, in ping
+    lang = load_language()
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 21, in load_language
+    if os.path.exists(LANG_FILE):
+NameError: name 'LANG_FILE' is not defined
+ERROR:telethon.client.updates:Unhandled exception on ping
+Traceback (most recent call last):
+  File "/home/andrey/Lukas/venv/lib/python3.10/site-packages/telethon/client/updates.py", line 570, in _dispatch_update
+    await callback(event)
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 56, in ping
+    lang = load_language()
+  File "/home/andrey/Lukas/modules/users_modules/Ping.py", line 23, in load_language
+    if os.path.exists(LANG_FILE):
+NameError: name 'LANG_FILE' is not defined

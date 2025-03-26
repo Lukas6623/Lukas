@@ -79,7 +79,7 @@ async def inline_echo(inline_query: types.InlineQuery):
 
     # Создаём кнопку с callback_data
     keyboard = InlineKeyboardMarkup().add(
-        InlineKeyboardButton(messages['change_language'], callback_data="show_buttons")  # Кнопка для показа новых кнопок
+        InlineKeyboardButton(messages['lukas_userbot'], callback_data="show_buttons")  # Кнопка для показа новых кнопок
     )
 
     results = [
@@ -107,7 +107,8 @@ async def show_buttons(callback_query: types.CallbackQuery):
 
     # Создаём новые inline кнопки: Настройки
     keyboard = InlineKeyboardMarkup().add(
-        InlineKeyboardButton(messages['settings'], callback_data="settings")
+        InlineKeyboardButton(messages['settings'], callback_data="settings"),
+        InlineKeyboardButton(messages['modules'], callback_data="modules")
     )
 
     if callback_query.inline_message_id:
@@ -123,7 +124,38 @@ async def show_buttons(callback_query: types.CallbackQuery):
             message_id=callback_query.message.message_id,
             reply_markup=keyboard  # Новые inline кнопки
         )
+@dp.callback_query_handler(lambda c: c.data == 'modules')
+async def modules(callback_query: types.CallbackQuery):
+    # Проверка, что запрос от авторизованного пользователя
+    if callback_query.from_user.id != AUTHORIZED_USER_ID:
+        return  # Если не авторизованный пользователь, игнорируем запрос
 
+    # Загружаем язык
+    language_code = get_language_code()
+    messages = load_language(language_code)
+
+    # Создаём кнопку "Сменить язык"
+    keyboard = InlineKeyboardMarkup().add(
+        InlineKeyboardButton(messages['update_modules'], callback_data="update_modules")
+    )
+
+    if callback_query.inline_message_id:
+        await bot.edit_message_text(
+            messages['module_management'],
+            inline_message_id=callback_query.inline_message_id,
+            reply_markup=keyboard  
+        )
+    else:
+        await bot.edit_message_text(
+            messages['module_management'],
+            chat_id=callback_query.from_user.id,
+            message_id=callback_query.message.message_id,
+            reply_markup=keyboard 
+        )
+
+
+
+        
 # Обработчик нажатия на кнопку "Настройки"
 @dp.callback_query_handler(lambda c: c.data == 'settings')
 async def settings(callback_query: types.CallbackQuery):
